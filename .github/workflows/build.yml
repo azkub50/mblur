@@ -1,0 +1,21 @@
+name: build
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile dylib
+        run: |
+          xcrun -sdk iphoneos clang -arch arm64 -dynamiclib -fobjc-arc -O2 \
+            -miphoneos-version-min=14.0 \
+            -framework Foundation -framework Metal -framework QuartzCore \
+            -install_name @rpath/MotionBlur.dylib \
+            -o MotionBlur.dylib MotionBlur.m
+          codesign -f -s - MotionBlur.dylib
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MotionBlur
+          path: MotionBlur.dylib
