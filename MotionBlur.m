@@ -8,7 +8,7 @@
 #import <QuartzCore/CAMetalLayer.h>
 #import <objc/runtime.h>
 
-static float gStrength = 0.45f;
+static float gStrength = 0.10f;
 static id<MTLRenderPipelineState> gPSO;
 static MTLPixelFormat gPF;
 static id<MTLTexture> gTmp, gHist;
